@@ -9,7 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/servicediscovery/types"
 	"go.opentelemetry.io/collector/config/configretry"
 	"go.opentelemetry.io/collector/exporter/exporterhelper"
-	"go.opentelemetry.io/collector/exporter/otlpexporter"
+	"go.opentelemetry.io/collector/exporter/otlphttpexporter"
 )
 
 type routingKey int
@@ -53,7 +53,7 @@ type Config struct {
 
 // Protocol holds the individual protocol-specific settings. Only OTLP is supported at the moment.
 type Protocol struct {
-	OTLP otlpexporter.Config `mapstructure:"otlp"`
+	OTLP otlphttpexporter.Config `mapstructure:"otlphttp"`
 	// prevent unkeyed literal initialization
 	_ struct{}
 }

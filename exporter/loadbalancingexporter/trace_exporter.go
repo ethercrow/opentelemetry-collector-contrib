@@ -14,7 +14,7 @@ import (
 	"go.opentelemetry.io/collector/component"
 	"go.opentelemetry.io/collector/consumer"
 	"go.opentelemetry.io/collector/exporter"
-	"go.opentelemetry.io/collector/exporter/otlpexporter"
+	"go.opentelemetry.io/collector/exporter/otlphttpexporter"
 	"go.opentelemetry.io/collector/pdata/ptrace"
 	"go.opentelemetry.io/otel/metric"
 	"go.uber.org/multierr"
@@ -51,7 +51,7 @@ func newTracesExporter(params exporter.Settings, cfg component.Config) (*traceEx
 		return nil, err
 	}
 
-	exporterFactory := otlpexporter.NewFactory()
+	exporterFactory := otlphttpexporter.NewFactory()
 	cfFunc := func(ctx context.Context, endpoint string) (component.Component, error) {
 		oCfg := buildExporterConfig(cfg.(*Config), endpoint)
 		oParams := buildExporterSettings(exporterFactory.Type(), params, endpoint)

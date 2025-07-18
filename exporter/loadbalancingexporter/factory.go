@@ -12,7 +12,7 @@ import (
 	"go.opentelemetry.io/collector/component"
 	"go.opentelemetry.io/collector/exporter"
 	"go.opentelemetry.io/collector/exporter/exporterhelper"
-	"go.opentelemetry.io/collector/exporter/otlpexporter"
+	"go.opentelemetry.io/collector/exporter/otlphttpexporter"
 	"go.uber.org/zap"
 
 	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/loadbalancingexporter/internal/metadata"
@@ -34,8 +34,8 @@ func NewFactory() exporter.Factory {
 }
 
 func createDefaultConfig() component.Config {
-	otlpFactory := otlpexporter.NewFactory()
-	otlpDefaultCfg := otlpFactory.CreateDefaultConfig().(*otlpexporter.Config)
+	otlpFactory := otlphttpexporter.NewFactory()
+	otlpDefaultCfg := otlpFactory.CreateDefaultConfig().(*otlphttpexporter.Config)
 	otlpDefaultCfg.ClientConfig.Endpoint = "placeholder:4317"
 
 	return &Config{
@@ -47,7 +47,7 @@ func createDefaultConfig() component.Config {
 	}
 }
 
-func buildExporterConfig(cfg *Config, endpoint string) otlpexporter.Config {
+func buildExporterConfig(cfg *Config, endpoint string) otlphttpexporter.Config {
 	oCfg := cfg.Protocol.OTLP
 	oCfg.ClientConfig.Endpoint = endpoint
 
