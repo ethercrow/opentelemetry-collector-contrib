@@ -221,7 +221,6 @@ func (lsp *logsProcessor) processLogs(ctx context.Context, logsData plog.Logs) (
 					lsp.priorityFunc,
 					"logs sampler",
 					lsp.logger,
-					lsp.telemetryBuilder.ProcessorProbabilisticSamplerCountLogsSampled,
 				)
 			})
 			// Filter out empty ScopeLogs

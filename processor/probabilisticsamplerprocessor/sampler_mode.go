@@ -7,13 +7,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"strconv"
 
 	"go.opentelemetry.io/collector/pdata/pcommon"
 	"go.opentelemetry.io/collector/pdata/plog"
 	"go.opentelemetry.io/collector/pdata/ptrace"
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/metric"
 	"go.uber.org/zap"
 
 	"github.com/open-telemetry/opentelemetry-collector-contrib/pkg/sampling"
@@ -475,7 +472,6 @@ func commonShouldSampleLogic[T any](
 	priorityFunc priorityFunc[T],
 	description string,
 	logger *zap.Logger,
-	counter metric.Int64Counter,
 ) bool {
 	rnd, carrier, err := randFunc(item)
 
@@ -520,8 +516,6 @@ func commonShouldSampleLogic[T any](
 			logger.Info(description, zap.Error(err))
 		}
 	}
-
-	counter.Add(ctx, 1, metric.WithAttributes(attribute.String("policy", rnd.policyName()), attribute.String("sampled", strconv.FormatBool(sampled))))
 
 	return sampled
 }
